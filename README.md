@@ -4,6 +4,14 @@ An automated pipeline with **iterative refinement** for generating and validatin
 
 ## 🎯 Overview
 
+### Team Members:
+- Muhammad Faheem 
+- Hunain Maqbool
+
+### Ranking: (Unranked)
+
+(**Note:** Unfortunately, we could not complete the implementations for all 400 programs in time and hence remained unranked. We truly regret this missed oppourtunity.)
+
 This pipeline automates the entire process of:
 
 1. Loading task data (train/test examples from JSON files)
@@ -15,7 +23,7 @@ This pipeline automates the entire process of:
 ## 📋 Features
 
 - ✅ **Iterative Refinement**: Model learns from previous failed attempts
-- ✅ **Reasoning Model Support**: Uses GPT-4 OSS reasoning model for complex pattern discovery
+- ✅ **Reasoning Model Support**: Uses reasoning models for complex pattern discovery
 - ✅ **Automated Validation**: Every generated solution is automatically tested
 - ✅ **Syntax Checking**: Catches invalid Python code before validation
 - ✅ **Functional Testing**: Tests solutions on training examples using `code_golf_utils`
@@ -94,7 +102,6 @@ mkdir -p pipeline/output pipeline/output/failed pipeline/logs
 ### Step 4: Test the Pipeline
 
 ```bash
-# Run tests to verify everything works
 python pipeline/tests/test_pipeline.py
 ```
 
@@ -108,6 +115,8 @@ Expected output:
 ✓ CodeValidator working correctly
 ✓ OutputParser extracted code
 ```
+
+See [Running Tests](#-running-tests) section for more testing options.
 
 ### Step 5: Run on a Single Task (Testing)
 
@@ -154,7 +163,7 @@ pipeline/output/task002.py
 
 ### Failed Attempts (for Debugging)
 
-Failed attempts are saved for analysis:
+Failed attempts are saved for analysis in `pipeline/output/failed/`:
 
 ```
 pipeline/output/failed/task001_attempt1.py
@@ -162,11 +171,17 @@ pipeline/output/failed/task001_attempt2.py
 ...
 ```
 
-You can compare attempts to see how the model evolved:
+**Debugging Commands:**
 
 ```bash
-# See what changed between attempts
+# See all attempts for a task
+ls -lh pipeline/output/failed/task001_*
+
+# Compare attempts to see how the model evolved
 diff pipeline/output/failed/task001_attempt1.py pipeline/output/failed/task001_attempt2.py
+
+# Count how many tasks failed all attempts
+ls pipeline/output/failed/*attempt3.py | wc -l
 ```
 
 ### Progress Logs
@@ -195,7 +210,11 @@ grep "validated_success" pipeline/logs/progress.csv | wc -l
 
 ## ⚙️ Configuration
 
-### Environment Variables (.env)
+### Environment Variables
+
+See [Step 2: Setup Environment](#step-2-setup-environment) in Quick Start for detailed setup instructions.
+
+The `.env` file should contain:
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
@@ -337,7 +356,7 @@ For each generated solution:
 ### LLMCodeGenerator (`modules/llm_generator.py`)
 
 - Groq API integration
-- Default model: `openai/gpt-oss-20b` (GPT-4 OSS reasoning)
+- Configurable model (see [Available Models](#available-models) for options)
 - Configurable temperature/model
 - High token limit (8000) for reasoning space
 - Built-in rate limiting
@@ -578,49 +597,14 @@ print(f'Task has {len(data[\"train\"])} train examples')
 
 ## 🎯 Next Steps
 
-1. **Test on one task**: `python run_pipeline.py --start 1 --end 1 --max-calls 5`
-2. **Review the results**:
-   - Successful solution: `pipeline/output/task001.py`
-   - Failed attempts: `pipeline/output/failed/task001_attempt*.py`
-   - Logs: `pipeline/logs/progress.csv`
-3. **Analyze learning**: Compare failed attempts to see model evolution
-4. **Run on subset**: `python run_pipeline.py --start 1 --end 10 --max-calls 50`
-5. **Scale up**: `python run_pipeline.py --start 1 --end 400 --max-calls 1200`
+1. **Start with a single task** (see [Step 5](#step-5-run-on-a-single-task-testing))
+2. **Review the output** in `pipeline/output/` and check logs in `pipeline/logs/progress.csv`
+3. **Analyze failed attempts** using the debugging commands in the [Output section](#failed-attempts-for-debugging)
+4. **Process a subset** (see [Step 6](#step-6-run-on-a-small-subset)) to validate your setup
+5. **Scale up to all tasks** (see [Step 7](#step-7-process-all-tasks)) when ready
 6. **Submit validated solutions** to Kaggle
 
-## 💡 Understanding Iterative Refinement
-
-### Example: Task 001 Evolution
-
-**Attempt 1** (Initial - FAILED):
-
-- Model generates basic approach
-- Misunderstands the pattern
-- Validation fails with specific error
-
-**Attempt 2** (Refinement - SUCCESS):
-
-```
-Input: Previous failed code + Error message
-Analysis: Model reviews what went wrong
-Output: Corrected solution that passes validation ✅
-```
-
-This approach significantly improves success rates on complex tasks!
-
-### Debugging Failed Tasks
-
-```bash
-# See all attempts for a task
-ls -lh pipeline/output/failed/task001_*
-
-# Compare first and second attempts
-diff pipeline/output/failed/task001_attempt1.py \
-     pipeline/output/failed/task001_attempt2.py
-
-# Count how many tasks failed all attempts
-ls pipeline/output/failed/*attempt3.py | wc -l
-```
+For detailed information on how iterative refinement works, see [Iterative Refinement Process](#iterative-refinement-process).
 
 ## 📚 Development
 
