@@ -1,11 +1,12 @@
-# 🧩 NeurIPS Google Code Golf Championship 2025 - Self-Verifying Generation Pipeline
+# NeurIPS Google Code Golf Championship 2025 - Self-Verifying Generation Pipeline
 
 An automated pipeline with **iterative refinement** for generating and validating code solutions for the NeurIPS 2025 Google Code Golf Championship using LLM (Groq).
 
-## 🎯 Overview
+## Overview
 
 ### Team Members:
-- [Muhammad Faheem](faheemgurkani@gmail.com) 
+
+- [Muhammad Faheem](faheemgurkani@gmail.com)
 - Hunain Maqbool
 
 ### Ranking: (Unranked)
@@ -20,20 +21,20 @@ This pipeline automates the entire process of:
 4. Validating code syntax and correctness
 5. Saving only verified solutions
 
-## 📋 Features
+## Features
 
-- ✅ **Iterative Refinement**: Model learns from previous failed attempts
-- ✅ **Reasoning Model Support**: Uses reasoning models for complex pattern discovery
-- ✅ **Automated Validation**: Every generated solution is automatically tested
-- ✅ **Syntax Checking**: Catches invalid Python code before validation
-- ✅ **Functional Testing**: Tests solutions on training examples using `code_golf_utils`
-- ✅ **Failed Attempt Tracking**: Saves failed code for debugging and analysis
-- ✅ **Progress Tracking**: CSV logs with detailed statistics
-- ✅ **Smart Retry Logic**: Passes previous errors to model for targeted fixes
-- ✅ **Rate Limiting**: Built-in delays to respect API limits
-- ✅ **Modular Design**: Easy to extend and customize
+- **Iterative Refinement**: Model learns from previous failed attempts
+- **Reasoning Model Support**: Uses reasoning models for complex pattern discovery
+- **Automated Validation**: Every generated solution is automatically tested
+- **Syntax Checking**: Catches invalid Python code before validation
+- **Functional Testing**: Tests solutions on training examples using `code_golf_utils`
+- **Failed Attempt Tracking**: Saves failed code for debugging and analysis
+- **Progress Tracking**: CSV logs with detailed statistics
+- **Smart Retry Logic**: Passes previous errors to model for targeted fixes
+- **Rate Limiting**: Built-in delays to respect API limits
+- **Modular Design**: Easy to extend and customize
 
-## 📁 Directory Structure
+## Directory Structure
 
 ```
 neurips-google-code-golf-championship-2025/
@@ -62,7 +63,7 @@ neurips-google-code-golf-championship-2025/
 └── README.md                 # This file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Step 1: Install Dependencies
 
@@ -108,12 +109,12 @@ python pipeline/tests/test_pipeline.py
 Expected output:
 
 ```
-✓ All modules imported successfully
-✓ TaskManager found 5 task files
-✓ TaskParser loaded task with examples
-✓ PromptBuilder created prompt
-✓ CodeValidator working correctly
-✓ OutputParser extracted code
+All modules imported successfully
+TaskManager found 5 task files
+TaskParser loaded task with examples
+PromptBuilder created prompt
+CodeValidator working correctly
+OutputParser extracted code
 ```
 
 See [Running Tests](#-running-tests) section for more testing options.
@@ -149,7 +150,7 @@ python run_pipeline.py --start 1 --end 10 --max-calls 50
 python run_pipeline.py --start 1 --end 400 --max-calls 1200
 ```
 
-## 📊 Output
+## Output
 
 ### Generated Solutions
 
@@ -208,7 +209,7 @@ ls -lh pipeline/output/
 grep "validated_success" pipeline/logs/progress.csv | wc -l
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -243,7 +244,7 @@ python run_pipeline.py \
 
 **Recommended (Reasoning Models)**:
 
-- `openai/gpt-oss-20b` ✅ **(default)** - GPT-4 OSS reasoning model, excellent for complex patterns
+- `openai/gpt-oss-20b` **(default)** - GPT-4 OSS reasoning model, excellent for complex patterns
 - `llama-3.3-70b-versatile` - High quality, versatile model
 
 **Fast Models**:
@@ -251,7 +252,7 @@ python run_pipeline.py \
 - `llama-3.1-8b-instant` - Fastest, good for simple tasks
 - `mixtral-8x7b-32768` - Balanced speed and quality
 
-## 🔍 How It Works
+## How It Works
 
 ### Pipeline Stages with Iterative Refinement
 
@@ -331,7 +332,7 @@ For each generated solution:
    - Only saves if 100% pass rate on training examples
    - Logs all results to CSV
 
-## 🛠️ Module Details
+## Module Details
 
 ### TaskManager (`modules/task_manager.py`)
 
@@ -386,7 +387,7 @@ For each generated solution:
 - Statistics tracking
 - Real-time progress monitoring
 
-## 📝 Example Usage
+## Example Usage
 
 ### Programmatic Usage with Iterative Refinement
 
@@ -437,7 +438,7 @@ for attempt in range(max_attempts):
         passed, message = cv.passes_training_examples(task_data, code)
         if passed:
             fw.save_code(1, code)
-            print(f"✅ Success on attempt {attempt + 1}")
+            print(f"Success on attempt {attempt + 1}")
             break
         else:
             # Store for next attempt
@@ -448,77 +449,77 @@ for attempt in range(max_attempts):
         previous_error = "Syntax error"
 ```
 
-## 📈 Statistics
+## Statistics
 
 The pipeline tracks:
 
-- ✅ Successful validations
-- ❌ Syntax errors
-- ❌ Validation failures
-- ⚠️ Exceptions
-- ⏭️ Skipped (already solved)
+- Successful validations
+- Syntax errors
+- Validation failures
+- Exceptions
+- Skipped (already solved)
 
-## 📝 Example Output
+## Example Output
 
 ```
 ================================================================================
-🚀 Google Code Golf 2025 - Self-Verifying Generation Pipeline
+Google Code Golf 2025 - Self-Verifying Generation Pipeline
 ================================================================================
-📁 Data directory: /path/to/data/google-code-golf-2025
-💾 Output directory: /path/to/pipeline/output
-📊 Tasks: 1 to 10
-🤖 Model: openai/gpt-oss-20b
-🔄 Max API calls: 100
+Data directory: /path/to/data/google-code-golf-2025
+Output directory: /path/to/pipeline/output
+Tasks: 1 to 10
+Model: openai/gpt-oss-20b
+Max API calls: 100
 ================================================================================
 
-📋 Found 10 task files
+Found 10 task files
 
 ================================================================================
 [1/10] Processing Task 001
 ================================================================================
-📚 Train examples: 5
-🧪 Test examples: 1
-🤖 Generating code... (attempt 1/3) [Initial]
+Train examples: 5
+Test examples: 1
+Generating code... (attempt 1/3) [Initial]
 [LLM] API call #1 completed
-📝 Generated code (0 bytes)
-🔍 Validating syntax...
-✅ Validating functionality...
-❌ Validation failed: Function p() not found
-🔄 Retrying with previous solution feedback...
-🤖 Generating code... (attempt 2/3) [Refinement]
+Generated code (0 bytes)
+Validating syntax...
+Validating functionality...
+Validation failed: Function p() not found
+Retrying with previous solution feedback...
+Generating code... (attempt 2/3) [Refinement]
 [LLM] API call #2 completed
-📝 Generated code (305 bytes)
-🔍 Validating syntax...
-✅ Validating functionality...
-✅ Validation passed! Passed 5/5 train examples
-[✓] Saved validated solution for task 001 (305 bytes)
+Generated code (305 bytes)
+Validating syntax...
+Validating functionality...
+Validation passed! Passed 5/5 train examples
+Saved validated solution for task 001 (305 bytes)
 
-⏱️  Waiting 2s before next task...
+Waiting 2s before next task...
 
 ================================================================================
 [2/10] Processing Task 002
 ================================================================================
-📚 Train examples: 5
-🧪 Test examples: 1
-🤖 Generating code... (attempt 1/3) [Initial]
+Train examples: 5
+Test examples: 1
+Generating code... (attempt 1/3) [Initial]
 [LLM] API call #3 completed
-📝 Generated code (187 bytes)
-🔍 Validating syntax...
-✅ Validating functionality...
-✅ Validation passed! Passed 5/5 train examples
-[✓] Saved validated solution for task 002 (187 bytes)
+Generated code (187 bytes)
+Validating syntax...
+Validating functionality...
+Validation passed! Passed 5/5 train examples
+Saved validated solution for task 002 (187 bytes)
 
 ...
 
 ================================================================================
-📊 PIPELINE SUMMARY
+PIPELINE SUMMARY
 ================================================================================
-✅ Successful: 8
-❌ Syntax errors: 0
-❌ Validation failed: 2
-❌ Exceptions: 0
-⏭️  Skipped: 0
-📞 API calls made: 28
+Successful: 8
+Syntax errors: 0
+Validation failed: 2
+Exceptions: 0
+Skipped: 0
+API calls made: 28
 ================================================================================
 ```
 
@@ -529,7 +530,7 @@ The pipeline tracks:
 - Tracks API calls across all attempts
 - Displays validation results for each attempt
 
-## 🎓 Best Practices
+## Best Practices
 
 1. **Start Small**: Test on task 1 first, then 1-10
 2. **Monitor Logs**: Check `pipeline/logs/progress.csv` regularly
@@ -540,7 +541,7 @@ The pipeline tracks:
 7. **Check API Limits**: Monitor your Groq API usage (each task uses up to 3 calls)
 8. **Budget API Calls**: Set `--max-calls` to `tasks × 3` for full retry coverage
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### ModuleNotFoundError
 
@@ -575,7 +576,7 @@ curl https://api.groq.com/v1/models -H "Authorization: Bearer $GROQ_API_KEY"
 - Adjust temperature (0.1-0.3)
 - Enable retries in run_pipeline.py
 
-## 🧪 Running Tests
+## Running Tests
 
 ```bash
 # Run all tests
@@ -595,7 +596,7 @@ print(f'Task has {len(data[\"train\"])} train examples')
 "
 ```
 
-## 🎯 Next Steps
+## Next Steps
 
 1. **Start with a single task** (see [Step 5](#step-5-run-on-a-single-task-testing))
 2. **Review the output** in `pipeline/output/` and check logs in `pipeline/logs/progress.csv`
@@ -606,7 +607,7 @@ print(f'Task has {len(data[\"train\"])} train examples')
 
 For detailed information on how iterative refinement works, see [Iterative Refinement Process](#iterative-refinement-process).
 
-## 📚 Development
+## Development
 
 ### Adding New Modules
 
@@ -625,11 +626,11 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 ```
 
-## 📄 License
+## License
 
 See the parent directory README for license information.
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -637,10 +638,8 @@ See the parent directory README for license information.
 4. Test thoroughly
 5. Submit a pull request
 
-## 📧 Support
+## Support
 
 For issues or questions, please open a GitHub issue.
 
 ---
-
-**Happy Golfing! ⛳**
