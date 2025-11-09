@@ -5,7 +5,7 @@ An automated pipeline with **iterative refinement** for generating and validatin
 ## 🎯 Overview
 
 ### Team Members:
-- Muhammad Faheem 
+- [Muhammad Faheem](faheemgurkani@gmail.com) 
 - Hunain Maqbool
 
 ### Ranking: (Unranked)
